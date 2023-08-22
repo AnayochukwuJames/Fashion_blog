@@ -14,4 +14,5 @@ public interface UserService {
     User updateUser(Long userId, User updatedUser);
 
     ResponseEntity<String> loginUser(LoginDto loginDto);
+    ResponseEntity<String> logout(LoginDto loginDto);
 }

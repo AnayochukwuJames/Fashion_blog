@@ -6,6 +6,7 @@ import com.example.week_eight_task.Exception.ResourceNotFoundException;
 import com.example.week_eight_task.Model.User;
 import com.example.week_eight_task.Service.UserService;
 import com.example.week_eight_task.ServiceImp.UserServiceImp;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +60,17 @@ public class UserController {
         User updated = userService.updateUser(userId, updatedUser);
         return ResponseEntity.ok(updated);
     }
+    @PostMapping("/logout")
+    public ResponseEntity<String> logoutUser(HttpSession session, @RequestParam Long userId) {
+        User user = userService.findUserById(userId);
+        if (user != null) {
+            session.invalidate();
+            return ResponseEntity.ok().body("User logged out successfully");
+        } else {
+            return ResponseEntity.badRequest().body("User does not exist");
+        }
+    }
+
 }
 
 
